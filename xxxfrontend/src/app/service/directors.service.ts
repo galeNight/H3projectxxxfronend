@@ -1,6 +1,6 @@
-import { Injectable, inject } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, catchError, firstValueFrom, throwError } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { Director } from '../models/directors';
 
 
@@ -14,8 +14,13 @@ export  class directorservice{
         return this.http.get<Director>('https://localhost:7234/api/Director');
     }
     getdirector(id:number):Observable<Director>{
-      const director2 = this.http.get<Director>('https://localhost:7234/api/Director/'+id);
-      console.log(director2);
-      return director2;
+      return this.http.get<Director>('https://localhost:7234/api/Director/'+id);
+
+    }
+    createDirector(director:Director):Observable<Director>{
+      return this.http.post<Director>('https://localhost:7234/api/Director',director);
+    }
+    deleteDirector(id:number):Observable<Director>{
+      return this.http.delete<Director>('https://localhost:7234/api/Director/'+id);
     }
 }
