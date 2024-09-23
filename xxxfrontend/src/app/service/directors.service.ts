@@ -8,7 +8,14 @@ import { Director } from '../models/directors';
   providedIn: 'root'
 })
 export  class directorservice{
+  constructor(private http:HttpClient) { }
 
     getallDirectors():Observable<Director>{
-        return this.get<Director>('https://localhost:7234/api/Director');
+        return this.http.get<Director>('https://localhost:7234/api/Director');
+    }
+    getdirector(id:number):Observable<Director>{
+      const director2 = this.http.get<Director>('https://localhost:7234/api/Director/'+id);
+      console.log(director2);
+      return director2;
+    }
 }
