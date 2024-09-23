@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Director } from '../../models/directors';
+import { directorservice } from '../../service/directors.service';
 
 @Component({
   selector: 'app-directors',
