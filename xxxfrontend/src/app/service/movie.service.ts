@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Movie } from '../models/movies';
 
 @Injectable({
   providedIn: 'root'
@@ -8,9 +10,10 @@ export class MovieService {
 
   constructor(private http:HttpClient) { }
 
-  getallMovies(){
-    return this.http.get('https://localhost:7234/api/Movie');
+  getallMovies(): Observable<Movie[]> {
+    return this.http.get<Movie[]>('https://localhost:7234/api/Movie');
   }
+  
   getMovieById(id:number){
     return this.http.get('https://localhost:7234/api/Movie/'+id);
 

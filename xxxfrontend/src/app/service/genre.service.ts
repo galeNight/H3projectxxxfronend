@@ -10,9 +10,10 @@ export class GenreService {
 
   constructor(private http:HttpClient) { }
 
-  getallGenres():Observable<Genre>{
-    return this.http.get<Genre>('https://localhost:7234/api/Genre');
+  getallGenres(): Observable<Genre[]> {
+    return this.http.get<Genre[]>('https://localhost:7234/api/Genre');
   }
+  
   getGenreById(id:number):Observable<Genre>{
     return this.http.get<Genre>('https://localhost:7234/api/Genre/'+id);
 
