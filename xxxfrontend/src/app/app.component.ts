@@ -1,5 +1,5 @@
 import { Component,OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { Director } from './models/directors';
@@ -24,8 +24,8 @@ import { GenreService } from './service/genre.service';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+  [x: string]: any;
   title = 'xxxfrontend';
-
   
   directors: Director[] = [];
   genres: Genre[] = [];
@@ -36,27 +36,54 @@ export class AppComponent {
     private directorService: directorservice,
     private genreService: GenreService,
     private movieService: MovieService,
-    private reviewService: ReviewService
-  ){}
+    private reviewService: ReviewService,
+  ) {}
 
-  ngoninit(): void {
-    this.getAllDirectors();
-    this.getAllGenres();
-    this.getAllMovies();
-    this.getAllReviews();
+  ngOnInit(): void {
+    this.loadData();
   }
 
-  getAllDirectors(): void {
-    this.directorService.getallDirectors().subscribe(directors => this.directors = directors);
+  async loadData(): Promise<void> {
+    try {
+      await this.getAllDirectors();
+      await this.getAllGenres();
+      await this.getAllMovies();
+      await this.getAllReviews();
+    } catch (error) {
+      console.error('Error loading data:', error);
+    }
+  }
 
+  async getAllDirectors(): Promise<void> {
+    try {
+      this.directors = await this.directorService.getallDirectors().toPromise() || [];
+      console.log(this.directors);
+    } catch (error) {
+      console.error('Error fetching directors:', error);
+    }
   }
-  getAllGenres(): void {
-    this.genreService.getallGenres().subscribe(genres => this.genres = genres);
+
+  async getAllGenres(): Promise<void> {
+    try {
+      this.genres = await this.genreService.getallGenres().toPromise()||[];
+    } catch (error) {
+      console.error('Error fetching genres:', error);
+    }
   }
-  getAllMovies(): void {
-    this.movieService.getallMovies().subscribe(movies => this.movies = movies);
+
+  async getAllMovies(): Promise<void> {
+    try {
+      this.movies = await this.movieService.getallMovies().toPromise()||[];
+    } catch (error) {
+      console.error('Error fetching movies:', error);
+    }
   }
-  getAllReviews(): void {
-    this.reviewService.getallReviews().subscribe(reviews => this.reviews = reviews);
+
+  async getAllReviews(): Promise<void> {
+    try {
+      this.reviews = await this.reviewService.getallReviews().toPromise()||[];
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
   }
 }

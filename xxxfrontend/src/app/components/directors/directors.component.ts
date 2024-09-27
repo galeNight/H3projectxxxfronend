@@ -11,4 +11,5 @@ import { directorservice } from '../../service/directors.service';
 })
 export class DirectorsComponent {
 
+
 }
