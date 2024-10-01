@@ -1,4 +1,4 @@
-import { Component,OnInit } from '@angular/core';
+import { Component,inject,OnInit } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,7 +23,7 @@ import { GenreService } from './service/genre.service';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   [x: string]: any;
   title = 'xxxfrontend';
   
@@ -31,12 +31,13 @@ export class AppComponent {
   genres: Genre[] = [];
   movies: Movie[] = [];
   reviews: Review[] = [];
-  
+
   constructor(
     private directorService: directorservice,
     private genreService: GenreService,
     private movieService: MovieService,
     private reviewService: ReviewService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -85,5 +86,8 @@ export class AppComponent {
     } catch (error) {
       console.error('Error fetching reviews:', error);
     }
+  }
+  navigatetoDirector():void{
+    this.router.navigate(['/directors']);
   }
 }

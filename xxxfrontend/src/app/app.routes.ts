@@ -12,7 +12,7 @@ export const routes: Routes = [
     {path: 'genre', component: GenreComponent},
     {path: 'movie', component: MovieComponent},
     {path: 'review', component: ReviewComponent},
-    {path: 'app', component: AppComponent}
+    {path: 'app',component: AppComponent},
 ];
 
 @NgModule({ 
