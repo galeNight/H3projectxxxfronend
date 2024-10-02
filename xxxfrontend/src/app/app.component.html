@@ -1,5 +1,8 @@
 <nav>
-  <button (click)="navigatetoDirector()">got to directorpage</button>
+  <button (click)="openDirectorDialog()">add director</button>
+  <button (click)="createGenre({name:'newGenre'})">add genre</button>
+  <button (click)="createMovie({title:'newMovie',durationMinutes:0})">add movie</button>
+  <button (click)="createReview({rating:0,comment:'newReview'})">add review</button>
 </nav>
 <main class="main"> 
   <!-- Directors Section -->
@@ -8,9 +11,11 @@
     <ul *ngIf="directors && directors.length > 0">
       <li *ngFor="let director of directors">
         {{ director.id }} - {{ director.name }}
+        <button (click)="deleteDirector(director.id!)">delete</button>
       </li>
     </ul>
     <p *ngIf="!directors || directors.length === 0">No directors available</p>
+
   </section>
   
   <!-- Genres Section -->

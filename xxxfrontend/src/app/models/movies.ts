@@ -1,5 +1,5 @@
 export class Movie {
-    id: number=0;
+    id?: number;
     title: string="";
     durationMinutes : number=0;
 }

@@ -8,5 +8,4 @@ import { Component } from '@angular/core';
   styleUrl: './review.component.css'
 })
 export class ReviewComponent {
-
 }

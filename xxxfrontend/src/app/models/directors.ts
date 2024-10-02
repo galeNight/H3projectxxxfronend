@@ -1,7 +1,7 @@
 import { Movie } from "./movies";
 
 export class Director {
-  id: number=0;
+  id?: number;
   name: string="";
   movies?: Movie[]=[];
 }
