@@ -131,7 +131,6 @@ export class AppComponent implements OnInit {
   async getAllDirectors(): Promise<void> {
     try {
       this.directors = await this.directorService.getallDirectors().toPromise() || [];
-      console.log(this.directors);
     } catch (error) {
       console.error('Error fetching directors:', error);
     }
