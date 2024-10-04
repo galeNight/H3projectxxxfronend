@@ -73,7 +73,6 @@ export class AppComponent implements OnInit {
     dialogConfig.data = { dialogType: 'director' };
 
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.createDirector({name: result, movies: [] });
@@ -83,11 +82,12 @@ export class AppComponent implements OnInit {
 
   openGenreDialog(): void {
     const dialogConfig = new MatDialogConfig();
+    console.log("1234");
     dialogConfig.width = '400px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'genre' };
-
+    console.log(dialogConfig.data);
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {

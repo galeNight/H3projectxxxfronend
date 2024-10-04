@@ -1,5 +1,5 @@
-import { Component, Input, } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, Input, } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef, } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
   selector: 'app-director-dialog',
   standalone: true,
   imports: [
-    MatInputModule,
+MatInputModule,
     MatFormFieldModule,
     CommonModule,
     FormsModule,
@@ -20,7 +20,7 @@ import { MatButtonModule } from '@angular/material/button';
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {
-  @Input() dialogType: 'director' | 'genre' | 'movie' | 'review' = 'director';
+  @Input() dialogType: 'director' | 'genre'  | 'movie' | 'review'= 'director';
   directorName: string = '';
   genreName: string = '';
   movieTitle: string = '';
@@ -30,7 +30,8 @@ export class DialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
-  ) {}
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { this.dialogType = this.data.dialogType; }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -39,8 +40,10 @@ export class DialogComponent {
   submit(): void {
     if (this.dialogType === 'director') {
       this.dialogRef.close(this.directorName);
-    } else if (this.dialogType === 'genre') {
+    } else 
+    if (this.dialogType === 'genre') {
       this.dialogRef.close(this.genreName);
+      console.log("123");
     } else if (this.dialogType === 'movie') {
       this.dialogRef.close({ title: this.movieTitle, durationMinutes: this.movieDuration });
     } else if (this.dialogType === 'review') {
