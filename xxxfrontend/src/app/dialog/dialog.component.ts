@@ -43,7 +43,6 @@ export class DialogComponent {
     } else 
     if (this.dialogType === 'genre') {
       this.dialogRef.close(this.genreName);
-      console.log("123");
     } else if (this.dialogType === 'movie') {
       this.dialogRef.close({ title: this.movieTitle, durationMinutes: this.movieDuration });
     } else if (this.dialogType === 'review') {

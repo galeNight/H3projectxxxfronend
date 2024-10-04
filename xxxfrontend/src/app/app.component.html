@@ -1,8 +1,8 @@
 <nav>
   <button (click)="openDirectorDialog()">add director</button>
   <button (click)="openGenreDialog()">add genre</button>
-  <button (click)="createMovie({title:'newMovie',durationMinutes:0})">add movie</button>
-  <button (click)="createReview({rating:0,comment:'newReview'})">add review</button>
+  <button (click)="openMovieDialog()">add movie</button>
+  <button (click)="openReviewDialog()">add review</button>
 </nav>
 <main class="main"> 
   <!-- Directors Section -->
@@ -24,6 +24,7 @@
     <ul *ngIf="genres && genres.length > 0">
       <li *ngFor="let genre of genres">
         {{ genre.id }} - {{ genre.name }}
+        <button (click)="deleteGenre(genre.id!)">delete</button>
       </li>
     </ul>
     <p *ngIf="!genres || genres.length === 0">No genres available</p>

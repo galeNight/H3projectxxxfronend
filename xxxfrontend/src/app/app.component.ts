@@ -82,12 +82,10 @@ export class AppComponent implements OnInit {
 
   openGenreDialog(): void {
     const dialogConfig = new MatDialogConfig();
-    console.log("1234");
     dialogConfig.width = '400px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'genre' };
-    console.log(dialogConfig.data);
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(result => {
@@ -222,6 +220,30 @@ export class AppComponent implements OnInit {
       this.directors = this.directors.filter(d=>d.id!==id);
     }catch(error){
       console.error('Error deleting director:',error);
+    }
+  }
+  async deleteGenre(id:number):Promise<void>{
+    try{
+      await firstValueFrom(this.genreService.deleteGenre(id));
+      this.genres = this.genres.filter(g=>g.id!==id);
+    }catch(error){
+      console.error('Error deleting genre:',error);
+    }
+  }
+  async deleteMovie(id:number):Promise<void>{
+    try{
+      await firstValueFrom(this.movieService.deleteMovie(id));
+      this.movies = this.movies.filter(m=>m.id!==id);
+    }catch(error){
+      console.error('Error deleting movie:',error);
+    }
+  }
+  async deleteReview(id:number):Promise<void>{
+    try{
+      await firstValueFrom(this.reviewService.deleteReview(id));
+      this.reviews = this.reviews.filter(r=>r.id!==id);
+    }catch(error){
+      console.error('Error deleting review:',error);
     }
   }
 }
