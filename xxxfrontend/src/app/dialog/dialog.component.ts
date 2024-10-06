@@ -40,8 +40,7 @@ export class DialogComponent {
   submit(): void {
     if (this.dialogType === 'director') {
       this.dialogRef.close(this.directorName);
-    } else 
-    if (this.dialogType === 'genre') {
+    } else if (this.dialogType === 'genre') {
       this.dialogRef.close(this.genreName);
     } else if (this.dialogType === 'movie') {
       this.dialogRef.close({ title: this.movieTitle, durationMinutes: this.movieDuration });

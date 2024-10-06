@@ -47,6 +47,7 @@
     <ul *ngIf="reviews && reviews.length > 0">
       <li *ngFor="let review of reviews">
         {{ review.id }} - Rating: {{ review.rating }}/10 - Comment: {{ review.comment }}
+        <button (click)="deleteReview(review.id!)">delete</button>
       </li>
     </ul>
     <p *ngIf="!reviews || reviews.length === 0">No reviews available</p>
