@@ -36,6 +36,7 @@
     <ul *ngIf="movies && movies.length > 0">
       <li *ngFor="let movie of movies">
         {{ movie.id }} - {{ movie.title }} ({{ movie.durationMinutes }} mins)
+        <button (click)="deleteMovie(movie.id!)">delete</button>
       </li>
     </ul>
     <p *ngIf="!movies || movies.length === 0">No movies available</p>

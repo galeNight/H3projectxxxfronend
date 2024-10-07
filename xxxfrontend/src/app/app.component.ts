@@ -10,7 +10,7 @@ import { directorservice } from './service/directors.service';
 import { MovieService } from './service/movie.service';
 import { ReviewService } from './service/review.service';
 import { GenreService } from './service/genre.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom,} from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 
@@ -67,7 +67,7 @@ export class AppComponent implements OnInit {
   //open dialog methode
   openDirectorDialog(): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px';
+    dialogConfig.width = '500px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'director' };
@@ -106,7 +106,8 @@ export class AppComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.createMovie({ title: result.title, durationMinutes: result.durationMinutes });
+        /*this.createMovie({ title: result.title, durationMinutes: result.durationMinutes, directorId: result.directorId, genreId: result.genreId });*/
+        this.createMovie(result);
       }
     });
   }
@@ -204,6 +205,7 @@ export class AppComponent implements OnInit {
       const newReview = await firstValueFrom(this.reviewService.createReview(review));
       if (newReview) {
         this.reviews.push(newReview as Review);
+        await this.getAllReviews();
       } else {
         console.error('Received undefined when trying to create a review.');
       }
@@ -232,7 +234,7 @@ export class AppComponent implements OnInit {
   async deleteMovie(id:number):Promise<void>{
     try{
       await firstValueFrom(this.movieService.deleteMovie(id));
-      this.movies = this.movies.filter(m=>m.id!==id);
+      this.movies = this.movies.filter(m=>m.id!==id)
     }catch(error){
       console.error('Error deleting movie:',error);
     }
