@@ -13,7 +13,6 @@ import { GenreService } from './service/genre.service';
 import { firstValueFrom,} from 'rxjs';
 import { DialogComponent } from './dialog/dialog.component';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -34,12 +33,10 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 export class AppComponent implements OnInit {
   [x: string]: any;
   title = 'xxxfrontend';
-  
   directors: Director[] = [];
   genres: Genre[] = [];
   movies: Movie[] = [];
   reviews: Review[] = [];
-
   constructor(
     private directorService: directorservice,
     private genreService: GenreService,
@@ -48,11 +45,9 @@ export class AppComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
   ) {}
-
   ngOnInit(): void {
     this.loadData();
   }
-
   async loadData(): Promise<void> {
     try {
       await this.getAllDirectors();
@@ -63,7 +58,6 @@ export class AppComponent implements OnInit {
       console.error('Error loading data:', error);
     }
   }
-
   //open dialog methode
   openDirectorDialog(): void {
     const dialogConfig = new MatDialogConfig();
@@ -71,7 +65,6 @@ export class AppComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'director' };
-
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
@@ -79,31 +72,26 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
   openGenreDialog(): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px';
+    dialogConfig.width = '500px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'genre' };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.createGenre({name: result });
       }
     });
   }
-
   openMovieDialog(): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px';
+    dialogConfig.width = '500px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'movie' };
-
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         /*this.createMovie({ title: result.title, durationMinutes: result.durationMinutes, directorId: result.directorId, genreId: result.genreId });*/
@@ -111,23 +99,42 @@ export class AppComponent implements OnInit {
       }
     });
   }
-
+  openEditMovieDialog(movie: Movie): Promise<void> {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '500px';
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      dialogType: 'movie',  // Indicate this is for movie
+      movie: { ...movie }   // Pass the existing movie data
+    };
+    const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
+    return new Promise<void>((resolve) => {
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          if (movie.id !== undefined) {
+            this.updateMovie(movie.id, result); // Call updateMovie with result
+          } else {
+            console.error('Movie ID is undefined');
+          }
+        }
+        resolve();
+      });
+    });
+  } 
   openReviewDialog(): void {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '400px';
+    dialogConfig.width = '500px';
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = { dialogType: 'review' };
-
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.createReview({rating: result.rating, comment: result.comment });
       }
     });
   }
-
   //get all methodes
   async getAllDirectors(): Promise<void> {
     try {
@@ -136,7 +143,6 @@ export class AppComponent implements OnInit {
       console.error('Error fetching directors:', error);
     }
   }
-
   async getAllGenres(): Promise<void> {
     try {
       this.genres = await this.genreService.getallGenres().toPromise()||[];
@@ -144,7 +150,6 @@ export class AppComponent implements OnInit {
       console.error('Error fetching genres:', error);
     }
   }
-
   async getAllMovies(): Promise<void> {
     try {
       this.movies = await this.movieService.getallMovies().toPromise()||[];
@@ -152,7 +157,6 @@ export class AppComponent implements OnInit {
       console.error('Error fetching movies:', error);
     }
   }
-
   async getAllReviews(): Promise<void> {
     try {
       this.reviews = await this.reviewService.getallReviews().toPromise()||[];
@@ -160,7 +164,6 @@ export class AppComponent implements OnInit {
       console.error('Error fetching reviews:', error);
     }
   }
-
   async createDirector(director: Director): Promise<void> {
     try {
       const newDirector = await firstValueFrom(this.directorService.createDirector(director));
@@ -173,7 +176,6 @@ export class AppComponent implements OnInit {
       console.error('Error creating director:', error);
     }
   }
-
   async createMovie(movie: Movie): Promise<void> {
     try {
       const newMovie = await firstValueFrom(this.movieService.createMovie(movie));
@@ -186,7 +188,6 @@ export class AppComponent implements OnInit {
       console.error('Error creating movie:', error);
     }
   }
-  
   async createGenre(genre: Genre): Promise<void> {
     try {
       const newGenre = await firstValueFrom(this.genreService.createGenre(genre));
@@ -199,7 +200,6 @@ export class AppComponent implements OnInit {
       console.error('Error creating genre:', error);
     }
   }
-  
   async createReview(review: Review): Promise<void> {
     try {
       const newReview = await firstValueFrom(this.reviewService.createReview(review));
@@ -213,7 +213,6 @@ export class AppComponent implements OnInit {
       console.error('Error creating review:', error);
     }
   }
-
   //delete methodes
   async deleteDirector(id:number):Promise<void>{
     try{
@@ -247,4 +246,20 @@ export class AppComponent implements OnInit {
       console.error('Error deleting review:',error);
     }
   }
+  //update methode
+  async updateMovie(id: number, movie: Movie): Promise<void> {
+    try {
+      const updatedMovie = await firstValueFrom(this.movieService.updateMovie(id, movie));
+      if (updatedMovie) {
+        const index = this.movies.findIndex(m => m.id === id);
+        if (index > -1) {
+          this.movies[index] = updatedMovie;
+        }
+      } else {
+        console.error('Received undefined when trying to update a movie.');
+      }
+    } catch (error) {
+      console.error('Error updating movie:', error);
+    }
+  }  
 }

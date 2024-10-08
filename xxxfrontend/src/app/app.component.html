@@ -15,9 +15,7 @@
       </li>
     </ul>
     <p *ngIf="!directors || directors.length === 0">No directors available</p>
-
   </section>
-  
   <!-- Genres Section -->
   <section>
     <h2>Genres</h2>
@@ -29,7 +27,6 @@
     </ul>
     <p *ngIf="!genres || genres.length === 0">No genres available</p>
   </section>
-  
   <!-- Movies Section -->
   <section>
     <h2>Movies</h2>
@@ -37,11 +34,11 @@
       <li *ngFor="let movie of movies">
         {{ movie.id }} - {{ movie.title }} ({{ movie.durationMinutes }} mins)
         <button (click)="deleteMovie(movie.id!)">delete</button>
+        <button (click)="openEditMovieDialog(movie)">edit</button>
       </li>
     </ul>
     <p *ngIf="!movies || movies.length === 0">No movies available</p>
   </section>
-  
   <!-- Reviews Section -->
   <section>
     <h2>Reviews</h2>
@@ -54,5 +51,4 @@
     <p *ngIf="!reviews || reviews.length === 0">No reviews available</p>
   </section>
 </main>
-
 <router-outlet></router-outlet>

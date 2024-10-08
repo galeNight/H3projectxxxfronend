@@ -24,4 +24,7 @@ export class MovieService {
   deleteMovie(id:number){
     return this.http.delete('https://localhost:7234/api/Movie/'+id);
   }
+  updateMovie(id: number, movie: Movie): Observable<Movie> {
+    return this.http.put<Movie>('https://localhost:7234/api/Movie/' + id, movie);
+  }
 }

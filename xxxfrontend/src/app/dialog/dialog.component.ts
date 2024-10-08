@@ -21,15 +21,6 @@ import { Director } from '../models/directors';
   styleUrl: './dialog.component.css'
 })
 export class DialogComponent {
-  // @Input() dialogType: 'director' | 'genre'  | 'movie' | 'review'= 'director';
-  // directorName: string = '';
-  // genreName: string = '';
-  // movieTitle: string = '';
-  // reviewComment: string = '';
-  // movieDuration: number = 0;
-  // reviewRating: number = 0;
-  // directorId: number = 0;
-  // genreId: number = 0;
   @Input() dialogType: 'director' | 'genre' | 'movie' | 'review' = 'director';
   directorName: string = '';
   genreName: string = '';
@@ -40,8 +31,7 @@ export class DialogComponent {
   directorId: number[] = [];
   genreId: number[] = [];
   reviewId: number[] = [];
-  
-
+  movieId?: number;
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -49,6 +39,7 @@ export class DialogComponent {
     // If dialog type is movie, populate fields for editing
     if (this.dialogType === 'movie') {
       if (data.movie) {
+        this.movieId = data.movie.id;
         this.movieTitle = data.movie.title;
         this.movieDuration = data.movie.durationMinutes;
         this.directorId = data.movie.directorIds || [];
@@ -57,11 +48,9 @@ export class DialogComponent {
       }
     }
   }
-
   onNoClick(): void {
     this.dialogRef.close();
   }
-
   submit(): void {
     if (this.dialogType === 'director') {
       this.dialogRef.close(this.directorName);
@@ -69,14 +58,16 @@ export class DialogComponent {
       this.dialogRef.close(this.genreName);
     } else if (this.dialogType === 'movie') {
       this.dialogRef.close({ 
+        id: this.movieId, // Include the movie ID for updates
         title: this.movieTitle, 
         durationMinutes: this.movieDuration,
         directorId: this.directorId,
         genreId: this.genreId,
         reviewRating: this.reviewRating,
-       });
+      });
     } else if (this.dialogType === 'review') {
       this.dialogRef.close({ rating: this.reviewRating, comment: this.reviewComment });
     }
   }
+  
 }
