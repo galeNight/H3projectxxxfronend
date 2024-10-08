@@ -18,8 +18,14 @@
   <mat-form-field *ngIf="dialogType === 'movie'">
     <mat-label>Duration (minutes)</mat-label>
     <input matInput type="number" [(ngModel)]="movieDuration" placeholder="Enter duration" />
-    <input matInput type="number" [(ngModel)]="directorId" placeholder="Enter director id" />
-    <input matInput type="number" [(ngModel)]="genreId" placeholder="Enter genre id" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Director ID</mat-label>
+    <input matInput type="number" [(ngModel)]="directorId" placeholder="Enter director ID" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Genre ID</mat-label>
+    <input matInput type="number" [(ngModel)]="genreId" placeholder="Enter genre ID" />
   </mat-form-field>
   <mat-form-field *ngIf="dialogType === 'review'">
     <mat-label>Rating</mat-label>

@@ -18,7 +18,7 @@ export class ReviewService {
     return this.http.get('https://localhost:7234/api/Review/'+id);
 
   }
-  createReview(review:any){
+  createReview(review: any){
     return this.http.post('https://localhost:7234/api/Review',review);
   }
   deleteReview(id:number){

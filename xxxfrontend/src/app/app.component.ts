@@ -106,7 +106,7 @@ export class AppComponent implements OnInit {
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       dialogType: 'movie',  // Indicate this is for movie
-      movie: { ...movie }   // Pass the existing movie data
+      movie: { ...movie },   // Pass the existing movie data
     };
     const dialogRef = this.dialog.open(DialogComponent, dialogConfig);
     return new Promise<void>((resolve) => {
@@ -153,6 +153,11 @@ export class AppComponent implements OnInit {
   async getAllMovies(): Promise<void> {
     try {
       this.movies = await this.movieService.getallMovies().toPromise()||[];
+      this.movies.forEach(Movie => {
+        Movie.director = this.directors.find(d => d.id === Movie.directorId);
+        Movie.genre = this.genres.find(g => g.id === Movie.genreId);
+        Movie.review = this.reviews.filter(r => r.movieId === Movie.id);
+      });
     } catch (error) {
       console.error('Error fetching movies:', error);
     }
@@ -169,6 +174,7 @@ export class AppComponent implements OnInit {
       const newDirector = await firstValueFrom(this.directorService.createDirector(director));
       if (newDirector) {
         this.directors.push(newDirector);
+        await this.getAllDirectors();
       } else {
         console.error('Received undefined when trying to create a director.');
       }
@@ -181,6 +187,7 @@ export class AppComponent implements OnInit {
       const newMovie = await firstValueFrom(this.movieService.createMovie(movie));
       if (newMovie) {
         this.movies.push(newMovie as Movie);
+        await this.getAllMovies();
       } else {
         console.error('Received undefined when trying to create a movie.');
       }
@@ -193,6 +200,7 @@ export class AppComponent implements OnInit {
       const newGenre = await firstValueFrom(this.genreService.createGenre(genre));
       if (newGenre) {
         this.genres.push(newGenre);
+        await this.getAllGenres();
       } else {
         console.error('Received undefined when trying to create a genre.');
       }

@@ -5,7 +5,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 import { Director } from '../models/directors';
+import { Review } from '../models/review';
 
 @Component({
   selector: 'app-director-dialog',
@@ -16,6 +19,8 @@ import { Director } from '../models/directors';
     CommonModule,
     FormsModule,
     MatButtonModule,
+    MatSelectModule,
+    MatOptionModule,
   ],
   templateUrl: './dialog.component.html',
   styleUrl: './dialog.component.css'
@@ -30,8 +35,8 @@ export class DialogComponent {
   reviewRating: number = 0;
   directorId: number[] = [];
   genreId: number[] = [];
-  reviewId: number[] = [];
   movieId?: number;
+  reviews: Review[] = [];
   constructor(
     public dialogRef: MatDialogRef<DialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
@@ -44,7 +49,6 @@ export class DialogComponent {
         this.movieDuration = data.movie.durationMinutes;
         this.directorId = data.movie.directorIds || [];
         this.genreId = data.movie.genreIds || [];
-        this.reviewId = data.movie.reviewIds || [];
       }
     }
   }
@@ -63,11 +67,11 @@ export class DialogComponent {
         durationMinutes: this.movieDuration,
         directorId: this.directorId,
         genreId: this.genreId,
-        reviewRating: this.reviewRating,
+        reviews: this.reviews,
       });
     } else if (this.dialogType === 'review') {
       this.dialogRef.close({ rating: this.reviewRating, comment: this.reviewComment });
     }
+    
   }
-  
 }
