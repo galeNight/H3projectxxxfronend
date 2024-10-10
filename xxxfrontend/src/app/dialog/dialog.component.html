@@ -1,0 +1,42 @@
+<h1 mat-dialog-title *ngIf="dialogType === 'director'">Add New Director</h1>
+<h1 mat-dialog-title *ngIf="dialogType === 'genre'">Add New Genre</h1>
+<h1 mat-dialog-title *ngIf="dialogType === 'movie'">Add New Movie</h1>
+<h1 mat-dialog-title *ngIf="dialogType === 'review'">Add New Review</h1>
+<div mat-dialog-content>
+  <mat-form-field *ngIf="dialogType === 'director'">
+    <mat-label>Director Name</mat-label>
+    <input matInput [(ngModel)]="directorName" placeholder="Enter director name" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'genre'">
+    <mat-label>Genre Name</mat-label>
+    <input matInput [(ngModel)]="genreName" placeholder="Enter genre name" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Movie Title</mat-label>
+    <input matInput [(ngModel)]="movieTitle" placeholder="Enter movie title" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Duration (minutes)</mat-label>
+    <input matInput type="number" [(ngModel)]="movieDuration" placeholder="Enter duration" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Director ID</mat-label>
+    <input matInput type="number" [(ngModel)]="directorId" placeholder="Enter director ID" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'movie'">
+    <mat-label>Genre ID</mat-label>
+    <input matInput type="number" [(ngModel)]="genreId" placeholder="Enter genre ID" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'review'">
+    <mat-label>Rating</mat-label>
+    <input matInput type="number" [(ngModel)]="reviewRating" placeholder="Enter rating" />
+  </mat-form-field>
+  <mat-form-field *ngIf="dialogType === 'review'">
+    <mat-label>Comment</mat-label>
+    <textarea matInput [(ngModel)]="reviewComment" placeholder="Enter comment"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="submit()">Submit</button>
+</div>

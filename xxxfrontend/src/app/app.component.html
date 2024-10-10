@@ -1,7 +1,55 @@
-
-
+<!-- xxxfrontend/src/app/app.component.html -->
+<nav>
+  <button (click)="openDirectorDialog()">add director</button>
+  <button (click)="openGenreDialog()">add genre</button>
+  <button (click)="openMovieDialog()">add movie</button>
+  <button (click)="openReviewDialog()">add review</button>
+</nav>
 <main class="main">
+  <!-- Directors Section -->
+  <section>
+    <h2>Directors</h2>
+    <ul *ngIf="directors && directors.length > 0">
+      <li *ngFor="let director of directors">
+        {{ director.id }} - {{ director.name }}
+        <button (click)="deleteDirector(director.id!)">delete</button>
+      </li>
+    </ul>
+    <p *ngIf="!directors || directors.length === 0">No directors available</p>
+  </section>
+  <!-- Genres Section -->
+  <section>
+    <h2>Genres</h2>
+    <ul *ngIf="genres && genres.length > 0">
+      <li *ngFor="let genre of genres">
+        {{ genre.id }} - {{ genre.name }}
+        <button (click)="deleteGenre(genre.id!)">delete</button>
+      </li>
+    </ul>
+    <p *ngIf="!genres || genres.length === 0">No genres available</p>
+  </section>
+  <!-- Movies Section -->
+  <section>
+    <h2>Movies</h2>
+    <ul *ngIf="movies && movies.length > 0">
+      <li *ngFor="let movie of movies">
+        {{ movie.id }} - {{ movie.title }} ({{ movie.durationMinutes }} mins - Directed by: {{movie.director?.name}} - Genre: {{movie.genre?.name}})
+        <button (click)="deleteMovie(movie.id!)">delete</button>
+        <button (click)="openEditMovieDialog(movie)">edit</button>
+      </li>
+    </ul>
+    <p *ngIf="!movies || movies.length === 0">No movies available</p>
+  </section>
+  <!-- Reviews Section -->
+  <section>
+    <h2>Reviews</h2>
+    <ul *ngIf="reviews && reviews.length > 0">
+      <li *ngFor="let review of reviews">
+        {{ review.id }} - Rating: {{ review.rating }}/10 - Comment: {{ review.comment }}
+        <button (click)="deleteReview(review.id!)">delete</button>
+      </li>
+    </ul>
+    <p *ngIf="!reviews || reviews.length === 0">No reviews available</p>
+  </section>
 </main>
-<!-- asdfghjk -->
- <!-- lkjhgf -->
-<router-outlet />
+<router-outlet></router-outlet>
